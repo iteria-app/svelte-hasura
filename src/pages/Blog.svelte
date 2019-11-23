@@ -23,10 +23,6 @@
 </script>
 
 <style lang="css">
-	.blog {
-		margin-top: -64px;
-	}
-	
 	.indent {
 		opacity: 0.85;
 		font-style: italic;
@@ -57,14 +53,5 @@
 	.blog_item em {
 		font-size: 85%;
 		line-height: 1;
-	}
-	
-	.callout {
-		box-shadow: none;
-		font-weight: 800;
-		text-transform: uppercase;
-		font-family: var(--font-header);
-		text-shadow: 2px 2px 0 rgb(255,210,23), 4px 4px 0 rgb(90,199,255);
-		padding-right: 4px;
 	}
 </style>
