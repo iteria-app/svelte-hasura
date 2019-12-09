@@ -1,19 +1,29 @@
 {
+  "type": "module",
   "private": true,
   "scripts": {
     "build": "pwa export --routes /about,/example/blog,/example/search,/",
     "start": "sirv build -s",
-    "watch": "pwa watch"
+    "watch": "pwa watch",
+    "test": "jest"
   },
   "dependencies": {
     "ganalytics": "^3.0.0",
+    "graphql": "^14.5.8",
+    "graphql-request": "^1.8.2",
+    "graphql-tag": "^2.10.1",
     "navaid": "^1.0.0",
+    "normalizr": "^3.4.1",
     "sirv-cli": "^0.4.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.7.5",
+    "@babel/plugin-transform-modules-commonjs": "^7.7.5",
     "@pwa/cli": "latest",
     "@pwa/preset-svelte": "latest",
-    "svelte": "^3.1.0"
+    "babel-jest": "^24.9.0",
+    "jest": "^24.9.0",
+    "svelte": "^3.16.0"
   },
   "browserslist": [
     ">0.25%",
@@ -21,5 +31,16 @@
     "not ie_mob 11",
     "not ie 11",
     "not dead"
-  ]
+  ],
+  "jest": {
+    "transform": {
+      "^.+\\.js$": "babel-jest"
+    },
+    "testRegex": ".*.jest-test.js$"
+  },
+  "babel": {
+    "plugins": [
+      "@babel/transform-modules-commonjs"
+    ]
+  }
 }

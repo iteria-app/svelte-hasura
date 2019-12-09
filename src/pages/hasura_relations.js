@@ -1,47 +1,40 @@
-import { normalize, schema } from 'normalizr'
-
 import {fkConfigurationRefSrc, fkConfigurationSrcRef} from './hasura_foreign_keys'
 
 export class HasuraRelations {
     constructor(tablesWithRelations) {
-        this.normalizrTables = {}
-
+        this.schemaTables = {}
+        
         for (var i = 0; i < (tablesWithRelations || []).length; i++) {
             const table = tablesWithRelations[i]
-            this.initTableSchema(table.table_name)
-        }
-
-        for (var i = 0; i < (tablesWithRelations || []).length; i++) {
-            const table = tablesWithRelations[i]
-            const schema = this.existingTableSchema(table.table_name)
-                    
+            const schemaTable = this.schemaTable(table.table_name)
+            
             for (var j = 0; j < (table.relationship || []).length; j++) {
                 const rel = table.relationship[j]
                 const ref = relationRemoteTableMapping(rel, table)
-                if (schema && ref && ref.remote_table) {
-                    const refSchema = this.existingTableSchema(ref.remote_table)
-                    //normalizr expects key & definition
-                    schema.definition[rel.rel_name] = rel.rel_type == 'array' ? [refSchema] : refSchema
-                    //purpose: automatic cache update (column mapping for insert/update/delete)
-                    schema.column_mapping[rel.rel_name] = ref.column_mapping
+                if (schemaTable && ref && ref.remote_table) {
+                    schemaTable.relations[rel.rel_name] = {
+                        rel_type: rel.rel_type,
+                        remote_table: ref.remote_table,
+                        column_mapping: ref.column_mapping,
+                    }
                 }
             }
         }
         if (typeof windows == 'undefined') {
-            window.aaaa = this.normalizrTables 
+            window.aaaa = this.schemaTables 
         }
     }
     
-    initTableSchema(tableName) {
-        return this.normalizrTables[tableName] = {key: tableName, definition: {}, column_mapping: {}}//schema.Entity(tableName)
+    initSchemaTable(tableName) {
+        return this.schemaTables[tableName] = {key: tableName, relations: {}, column_mapping: {}}//schema.Entity(tableName)
     }
 
-    existingTableSchema(tableName) {
-        const schema = this.normalizrTables[tableName]
+    schemaTable(tableName) {
+        const schema = this.schemaTables[tableName]
         if (schema) {
             return schema
         } else {
-            return this.initTableSchema(tableName)
+            return this.initSchemaTable(tableName)
         }
     }
 }
