@@ -23,7 +23,7 @@
     "@pwa/preset-svelte": "latest",
     "babel-jest": "^24.9.0",
     "jest": "^24.9.0",
-    "svelte": "^3.16.0"
+    "svelte": "^3.49.0"
   },
   "browserslist": [
     ">0.25%",
